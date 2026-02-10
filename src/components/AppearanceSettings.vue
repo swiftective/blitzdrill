@@ -75,6 +75,7 @@ const boardThemes = [
 ];
 
 const isOpen = ref(false);
+const baseUrl = import.meta.env.BASE_URL;
 
 const selectPieceSet = (set: string) => {
   emit("update:pieceSet", set);
@@ -122,7 +123,7 @@ const selectBoardTheme = (themeId: string) => {
               :title="theme.name"
             >
               <img
-                :src="`/board/${theme.id}.thumbnail.${theme.ext}`"
+                :src="`${baseUrl}/board/${theme.id}.thumbnail.${theme.ext}`"
                 :alt="theme.name"
               />
             </button>
@@ -140,16 +141,16 @@ const selectBoardTheme = (themeId: string) => {
               @click="selectPieceSet(set)"
             >
               <img
-                :src="`/pieces/${set}/wN.svg`"
+                :src="`${baseUrl}/pieces/${set}/wN.svg`"
                 class="piece-preview"
                 v-if="set !== 'monarchy' && set !== 'mono'"
               />
               <img
-                :src="`/pieces/${set}/wN.webp`"
+                :src="`${baseUrl}/pieces/${set}/wN.webp`"
                 class="piece-preview"
                 v-else-if="set === 'monarchy'"
               />
-              <img :src="`/pieces/${set}/N.svg`" class="piece-preview" v-else />
+              <img :src="`${baseUrl}/pieces/${set}/N.svg`" class="piece-preview" v-else />
               <span>{{ set }}</span>
             </button>
           </div>

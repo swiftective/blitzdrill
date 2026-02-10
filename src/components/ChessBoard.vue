@@ -32,6 +32,7 @@ let cg: Api | null = null;
 let resizeObserver: ResizeObserver | null = null;
 
 const pieceUrls = computed(() => {
+  const base = import.meta.env.BASE_URL;
   const set = props.pieceSet || "cburnett";
   const roles = ["P", "N", "B", "R", "Q", "K"];
   const colors = ["w", "b"];
@@ -41,11 +42,11 @@ const pieceUrls = computed(() => {
     roles.forEach((r) => {
       const key = `${c}${r}`;
       if (set === "monarchy") {
-        urls[key] = `url('/pieces/${set}/${key}.webp')`;
+        urls[key] = `url('${base}/pieces/${set}/${key}.webp')`;
       } else if (set === "mono") {
-        urls[key] = `url('/pieces/${set}/${r}.svg')`;
+        urls[key] = `url('${base}/pieces/${set}/${r}.svg')`;
       } else {
-        urls[key] = `url('/pieces/${set}/${key}.svg')`;
+        urls[key] = `url('${base}/pieces/${set}/${key}.svg')`;
       }
     });
   });
@@ -53,6 +54,7 @@ const pieceUrls = computed(() => {
 });
 
 const boardUrl = computed(() => {
+  const base = import.meta.env.BASE_URL;
   const boardImg = props.boardTheme || "brown";
   const boardExt = [
     "blue",
@@ -63,7 +65,7 @@ const boardUrl = computed(() => {
   ].includes(boardImg)
     ? "png"
     : "jpg";
-  return `url('/board/${boardImg}.${boardExt}')`;
+  return `url('${base}/board/${boardImg}.${boardExt}')`;
 });
 
 const initBoard = () => {
