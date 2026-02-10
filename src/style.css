@@ -1,0 +1,167 @@
+@import './assets/chessground.base.css';
+
+:root {
+  --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --bg-deep: #050506;
+  --bg-surface: #0f0f12;
+  --bg-elevated: #1a1a1e;
+  --bg-glass: rgba(10, 10, 12, 0.8);
+
+  --accent-primary: #6366f1; /* Electric Indigo */
+  --accent-success: #10b981; /* Emerald */
+  --accent-warning: #f59e0b; /* Amber */
+  --accent-error: #ef4444;   /* Crimson */
+  --accent-drill: #0ea5e9;   /* Sky Blue */
+
+  --text-bright: #ffffff;
+  --text-main: #d1d1d6;
+  --text-dim: #71717a;
+  --text-dark: #3f3f46;
+
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-active: rgba(99, 102, 241, 0.4);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
+
+  --glass-blur: 20px;
+
+  font-family: var(--font-main);
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: var(--text-main);
+  background-color: var(--bg-deep);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: fixed;
+}
+
+#app {
+  width: 100%;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-dark);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 5px rgba(204, 255, 0, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(204, 255, 0, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(204, 255, 0, 0.2); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Chessground Customization */
+.cg-wrap {
+  width: min(600px, 90vw, calc(100vh - 280px));
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg-surface);
+}
+
+/* Custom Chessground Theme Overrides */
+.cg-wrap .cg-board {
+  background-color: transparent !important;
+}
+
+.cg-wrap .square.white {
+  background-color: transparent !important;
+}
+
+.cg-wrap .square.black {
+  background-color: transparent !important;
+}
+
+.cg-wrap .square.last-move {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+.cg-wrap .square.selected {
+  background-color: rgba(99, 102, 241, 0.3) !important;
+}
+
+.cg-wrap .square.move-dest {
+  background: radial-gradient(rgba(99, 102, 241, 0.4) 15%, transparent 16%) !important;
+}
+
+.cg-wrap .square.premove-dest {
+  background: radial-gradient(rgba(245, 158, 11, 0.4) 15%, transparent 16%) !important;
+}
+
+.feedback-correct {
+  border-color: var(--accent-success) !important;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.3) !important;
+}
+
+.feedback-variation {
+  border-color: var(--accent-warning) !important;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3) !important;
+}
+
+.feedback-wrong {
+  border-color: var(--accent-error) !important;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.3) !important;
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Global Button & Input Styles */
+input, textarea {
+  font-family: var(--font-main);
+}
+
+button {
+  font-family: var(--font-main);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
