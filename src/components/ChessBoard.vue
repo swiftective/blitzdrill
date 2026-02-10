@@ -5,19 +5,21 @@ import type { Config } from '@lichess-org/chessground/config';
 import type { Api } from '@lichess-org/chessground/api';
 
 const props = defineProps<{
-  fen: string;
-  dests: Map<string, string[]>;
-  movableColor: 'white' | 'black' | 'both' | 'none';
-  lastMove?: string[];
-  orientation?: 'white' | 'black';
-  feedback?: 'correct' | 'variation' | 'wrong' | null;
-  pieceSet?: string;
-  boardTheme?: string;
-}>();
+  fen: string
+  dests: Map<string, string[]>
+  movableColor: 'white' | 'black' | 'both' | 'none'
+  lastMove?: string[]
+  orientation?: 'white' | 'black'
+  feedback?: 'correct' | 'variation' | 'wrong' | null
+  pieceSet?: string
+  boardTheme?: string
+  isSidebarCollapsed?: boolean
+}>()
 
 const emit = defineEmits<{
-  (e: 'move', orig: string, dest: string): void;
-}>();
+  move: [orig: string, dest: string]
+}>()
+
 
 const boardElement = ref<HTMLElement | null>(null);
 let cg: Api | null = null;
@@ -139,6 +141,21 @@ watch(() => props.lastMove, scheduleUpdate);
 watch(() => props.orientation, (newOrientation) => {
   cg?.set({ orientation: newOrientation || 'white' });
   nextTick(() => cg?.redrawAll());
+});
+
+watch(() => props.isSidebarCollapsed, () => {
+  // Redraw multiple times during the transition to ensure click coordinates are updated
+  const start = performance.now();
+  const duration = 400; // slightly longer than the 0.3s CSS transition
+
+  const step = (now: number) => {
+    if (!cg) return;
+    cg.redrawAll();
+    if (now - start < duration) {
+      requestAnimationFrame(step);
+    }
+  };
+  requestAnimationFrame(step);
 });
 
 onBeforeUnmount(() => {

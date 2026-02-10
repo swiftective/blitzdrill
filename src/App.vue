@@ -433,6 +433,7 @@ const resetDrill = () => {
               :orientation="boardOrientation"
               :piece-set="pieceSet"
               :board-theme="boardTheme"
+              :is-sidebar-collapsed="isSidebarCollapsed"
               @move="handleMove"
             />
           </div>
