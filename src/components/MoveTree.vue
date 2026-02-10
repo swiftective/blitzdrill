@@ -1,19 +1,22 @@
 <script lang="ts">
-import { defineComponent, type PropType, h } from 'vue';
-import type { MoveNode } from '../lib/chess';
+import { defineComponent, type PropType, h } from "vue";
+import type { MoveNode } from "../lib/chess";
 
 // Recursive functional component
 const MoveNodeRenderer = defineComponent({
-  name: 'MoveNodeRenderer',
+  name: "MoveNodeRenderer",
   props: {
     node: { type: Object as PropType<MoveNode>, required: true },
     currentNodeId: { type: String, required: true },
-    completedLines: { type: Set as unknown as PropType<Set<string>>, default: () => new Set() },
+    completedLines: {
+      type: Set as unknown as PropType<Set<string>>,
+      default: () => new Set(),
+    },
   },
-  emits: ['select'],
+  emits: ["select"],
   setup(props, { emit }) {
     const getMoveNumber = (node: MoveNode): string => {
-      if (!node.move) return '';
+      if (!node.move) return "";
       let depth = 0;
       let current: MoveNode | null = node;
       while (current && current.parent) {
@@ -21,14 +24,15 @@ const MoveNodeRenderer = defineComponent({
         current = current.parent;
       }
       const moveNum = Math.ceil(depth / 2);
-      if (node.move.color === 'w') return `${moveNum}.`;
-      
-      // For black, show number only if it's the start of a variation 
+      if (node.move.color === "w") return `${moveNum}.`;
+
+      // For black, show number only if it's the start of a variation
       // or the very first move in the tree
-      const isFirstInVariation = node.parent && node.parent.children[0] !== node;
+      const isFirstInVariation =
+        node.parent && node.parent.children[0] !== node;
       if (isFirstInVariation || depth === 1) return `${moveNum}...`;
-      
-      return '';
+
+      return "";
     };
 
     const isCompleted = (node: MoveNode): boolean => {
@@ -41,55 +45,59 @@ const MoveNodeRenderer = defineComponent({
 
       // Render this move
       elements.push(
-        h('span', {
-          class: {
-            'move-item': true,
-            'is-current': node.id === props.currentNodeId,
-            'is-completed': isCompleted(node),
+        h(
+          "span",
+          {
+            class: {
+              "move-item": true,
+              "is-current": node.id === props.currentNodeId,
+              "is-completed": isCompleted(node),
+            },
+            onClick: (e: Event) => {
+              e.stopPropagation();
+              emit("select", node);
+            },
           },
-          onClick: (e: Event) => {
-            e.stopPropagation();
-            emit('select', node);
-          }
-        }, [
-          h('span', { class: 'move-num' }, getMoveNumber(node)),
-          h('span', { class: 'move-san' }, node.san),
-        ])
+          [
+            h("span", { class: "move-num" }, getMoveNumber(node)),
+            h("span", { class: "move-san" }, node.san),
+          ],
+        ),
       );
 
       // Render variations after the move but before the main continuation
       if (node.children.length > 1) {
         for (let i = 1; i < node.children.length; i++) {
-          elements.push(' ');
+          elements.push(" ");
           elements.push(
-            h('span', { class: 'variation-bracket' }, [
-              h('span', { class: 'bracket' }, '('),
+            h("span", { class: "variation-bracket" }, [
+              h("span", { class: "bracket" }, "("),
               h(MoveNodeRenderer, {
                 node: node.children[i] as MoveNode,
                 currentNodeId: props.currentNodeId,
                 completedLines: props.completedLines,
-                onSelect: (n: MoveNode) => emit('select', n),
+                onSelect: (n: MoveNode) => emit("select", n),
               }),
-              h('span', { class: 'bracket' }, ')'),
-            ])
+              h("span", { class: "bracket" }, ")"),
+            ]),
           );
         }
       }
 
       // Render main continuation
       if (node.children.length > 0) {
-        elements.push(' ');
+        elements.push(" ");
         elements.push(
           h(MoveNodeRenderer, {
             node: node.children[0] as MoveNode,
             currentNodeId: props.currentNodeId,
             completedLines: props.completedLines,
-            onSelect: (n: MoveNode) => emit('select', n),
-          })
+            onSelect: (n: MoveNode) => emit("select", n),
+          }),
         );
       }
 
-      return h('span', { class: 'node-wrapper' }, elements);
+      return h("span", { class: "node-wrapper" }, elements);
     };
 
     return () => renderNode(props.node);
@@ -97,18 +105,25 @@ const MoveNodeRenderer = defineComponent({
 });
 
 export default defineComponent({
-  name: 'MoveTree',
+  name: "MoveTree",
   components: { MoveNodeRenderer },
   props: {
     root: { type: Object as PropType<MoveNode>, required: true },
     currentNodeId: { type: String, required: true },
-    completedLines: { type: Set as unknown as PropType<Set<string>>, default: () => new Set() },
+    completedLines: {
+      type: Set as unknown as PropType<Set<string>>,
+      default: () => new Set(),
+    },
   },
-  emits: ['select'],
+  emits: ["select"],
   setup(props, { emit }) {
     return () => {
-      if (!props.root || !props.root.children || props.root.children.length === 0) {
-        return h('div', { class: 'tree-empty' }, 'Awaiting tactical data...');
+      if (
+        !props.root ||
+        !props.root.children ||
+        props.root.children.length === 0
+      ) {
+        return h("div", { class: "tree-empty" }, "Awaiting tactical data...");
       }
 
       const children = props.root.children.map((child) =>
@@ -117,12 +132,12 @@ export default defineComponent({
           node: child,
           currentNodeId: props.currentNodeId,
           completedLines: props.completedLines,
-          onSelect: (n: MoveNode) => emit('select', n),
-        })
+          onSelect: (n: MoveNode) => emit("select", n),
+        }),
       );
 
-      return h('div', { class: 'tree-scroller' }, [
-        h('div', { class: 'tree-content' }, children)
+      return h("div", { class: "tree-scroller" }, [
+        h("div", { class: "tree-content" }, children),
       ]);
     };
   },

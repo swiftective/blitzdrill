@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Study } from '../lib/chess';
+import { ref } from "vue";
+import type { Study } from "../lib/chess";
 
 const props = defineProps<{
   studies: Study[];
@@ -8,28 +8,38 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'select', study: Study): void;
-  (e: 'create', name: string, pgn: string, defaultColor: 'white' | 'black'): void;
-  (e: 'update', study: Study): void;
-  (e: 'delete', id: string): void;
+  (e: "select", study: Study): void;
+  (
+    e: "create",
+    name: string,
+    pgn: string,
+    defaultColor: "white" | "black",
+  ): void;
+  (e: "update", study: Study): void;
+  (e: "delete", id: string): void;
 }>();
 
 const showCreateForm = ref(false);
-const newStudyName = ref('');
-const newStudyPgn = ref('');
-const newStudyColor = ref<'white' | 'black'>('white');
+const newStudyName = ref("");
+const newStudyPgn = ref("");
+const newStudyColor = ref<"white" | "black">("white");
 
 const editingStudy = ref<Study | null>(null);
-const editName = ref('');
-const editPgn = ref('');
-const editColor = ref<'white' | 'black'>('white');
+const editName = ref("");
+const editPgn = ref("");
+const editColor = ref<"white" | "black">("white");
 
 const handleCreate = () => {
   if (newStudyName.value.trim() && newStudyPgn.value.trim()) {
-    emit('create', newStudyName.value.trim(), newStudyPgn.value.trim(), newStudyColor.value);
-    newStudyName.value = '';
-    newStudyPgn.value = '';
-    newStudyColor.value = 'white';
+    emit(
+      "create",
+      newStudyName.value.trim(),
+      newStudyPgn.value.trim(),
+      newStudyColor.value,
+    );
+    newStudyName.value = "";
+    newStudyPgn.value = "";
+    newStudyColor.value = "white";
     showCreateForm.value = false;
   }
 };
@@ -38,18 +48,18 @@ const startEdit = (study: Study) => {
   editingStudy.value = study;
   editName.value = study.name;
   editPgn.value = study.pgn;
-  editColor.value = study.defaultColor || 'white';
+  editColor.value = study.defaultColor || "white";
 };
 
 const cancelEdit = () => {
   editingStudy.value = null;
-  editName.value = '';
-  editPgn.value = '';
+  editName.value = "";
+  editPgn.value = "";
 };
 
 const saveEdit = () => {
   if (editingStudy.value && editName.value.trim()) {
-    emit('update', {
+    emit("update", {
       ...editingStudy.value,
       name: editName.value.trim(),
       pgn: editPgn.value.trim(),
@@ -61,12 +71,15 @@ const saveEdit = () => {
 
 const confirmDelete = (study: Study) => {
   if (confirm(`Delete "${study.name}"?`)) {
-    emit('delete', study.id);
+    emit("delete", study.id);
   }
 };
 
 const formatDate = (timestamp: number) => {
-  return new Date(timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return new Date(timestamp).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
 };
 </script>
 
@@ -79,7 +92,7 @@ const formatDate = (timestamp: number) => {
         class="btn-add"
         :class="{ active: showCreateForm }"
       >
-        <span class="plus">{{ showCreateForm ? '×' : '+' }}</span>
+        <span class="plus">{{ showCreateForm ? "×" : "+" }}</span>
       </button>
     </div>
 
@@ -88,23 +101,46 @@ const formatDate = (timestamp: number) => {
       <div v-if="showCreateForm" class="form-container create-mode">
         <div class="form-group">
           <label>Study Name</label>
-          <input v-model="newStudyName" type="text" placeholder="e.g. Nimzo-Indian Defense" class="styled-input" />
+          <input
+            v-model="newStudyName"
+            type="text"
+            placeholder="e.g. Nimzo-Indian Defense"
+            class="styled-input"
+          />
         </div>
 
         <div class="form-group">
           <label>Player Color</label>
           <div class="mini-toggle">
-            <button :class="{ active: newStudyColor === 'white' }" @click="newStudyColor = 'white'">White</button>
-            <button :class="{ active: newStudyColor === 'black' }" @click="newStudyColor = 'black'">Black</button>
+            <button
+              :class="{ active: newStudyColor === 'white' }"
+              @click="newStudyColor = 'white'"
+            >
+              White
+            </button>
+            <button
+              :class="{ active: newStudyColor === 'black' }"
+              @click="newStudyColor = 'black'"
+            >
+              Black
+            </button>
           </div>
         </div>
 
         <div class="form-group">
           <label>PGN Data</label>
-          <textarea v-model="newStudyPgn" placeholder="Paste PGN moves..." class="styled-textarea"></textarea>
+          <textarea
+            v-model="newStudyPgn"
+            placeholder="Paste PGN moves..."
+            class="styled-textarea"
+          ></textarea>
         </div>
 
-        <button @click="handleCreate" class="btn-submit" :disabled="!newStudyName || !newStudyPgn">
+        <button
+          @click="handleCreate"
+          class="btn-submit"
+          :disabled="!newStudyName || !newStudyPgn"
+        >
           Initialize Study
         </button>
       </div>
@@ -125,8 +161,18 @@ const formatDate = (timestamp: number) => {
         <div class="form-group">
           <label>Player Color</label>
           <div class="mini-toggle">
-            <button :class="{ active: editColor === 'white' }" @click="editColor = 'white'">White</button>
-            <button :class="{ active: editColor === 'black' }" @click="editColor = 'black'">Black</button>
+            <button
+              :class="{ active: editColor === 'white' }"
+              @click="editColor = 'white'"
+            >
+              White
+            </button>
+            <button
+              :class="{ active: editColor === 'black' }"
+              @click="editColor = 'black'"
+            >
+              Black
+            </button>
           </div>
         </div>
 
@@ -161,10 +207,42 @@ const formatDate = (timestamp: number) => {
         </div>
         <div class="card-actions" @click.stop>
           <button @click="startEdit(study)" class="icon-btn edit" title="Edit">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+              ></path>
+              <path
+                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+              ></path>
+            </svg>
           </button>
-          <button @click="confirmDelete(study)" class="icon-btn delete" title="Delete">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+          <button
+            @click="confirmDelete(study)"
+            class="icon-btn delete"
+            title="Delete"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path
+                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+              ></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
           </button>
         </div>
       </div>
@@ -262,7 +340,8 @@ const formatDate = (timestamp: number) => {
   font-family: var(--font-mono);
 }
 
-.styled-input, .styled-textarea {
+.styled-input,
+.styled-textarea {
   background: #000;
   border: 1px solid var(--border-subtle);
   border-radius: 2px;
@@ -272,7 +351,8 @@ const formatDate = (timestamp: number) => {
   font-family: var(--font-mono);
 }
 
-.styled-input:focus, .styled-textarea:focus {
+.styled-input:focus,
+.styled-textarea:focus {
   outline: none;
   border-color: var(--accent-primary);
   box-shadow: 0 0 10px rgba(204, 255, 0, 0.1);
@@ -325,7 +405,7 @@ const formatDate = (timestamp: number) => {
 }
 
 .study-card.active::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -558,8 +638,14 @@ const formatDate = (timestamp: number) => {
   flex-shrink: 0;
 }
 
-.card-status.white { background: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
-.card-status.black { background: #444; border: 1px solid #666; }
+.card-status.white {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+.card-status.black {
+  background: #444;
+  border: 1px solid #666;
+}
 
 .card-main {
   flex: 1;
@@ -591,7 +677,9 @@ const formatDate = (timestamp: number) => {
   letter-spacing: 0.05em;
 }
 
-.dot-sep { opacity: 0.3; }
+.dot-sep {
+  opacity: 0.3;
+}
 
 .card-actions {
   display: flex;
@@ -639,10 +727,32 @@ const formatDate = (timestamp: number) => {
   opacity: 0.5;
 }
 
-.empty-state p { margin: 0; font-weight: 600; font-size: 0.9rem; }
-.empty-state .sub { font-size: 0.8rem; font-weight: 400; margin-top: 0.5rem; opacity: 0.7; }
+.empty-state p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.empty-state .sub {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
 
 /* Transitions */
-.expand-enter-active, .expand-leave-active { transition: all 0.3s ease; max-height: 400px; opacity: 1; }
-.expand-enter-from, .expand-leave-to { max-height: 0; opacity: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; overflow: hidden; }
+.expand-enter-active,
+.expand-leave-active {
+  transition: all 0.3s ease;
+  max-height: 400px;
+  opacity: 1;
+}
+.expand-enter-from,
+.expand-leave-to {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+}
 </style>

@@ -1,8 +1,8 @@
-@import './assets/chessground.base.css';
+@import "./assets/chessground.base.css";
 
 :root {
-  --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-main: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
   --bg-deep: #050506;
   --bg-surface: #0f0f12;
@@ -12,8 +12,8 @@
   --accent-primary: #6366f1; /* Electric Indigo */
   --accent-success: #10b981; /* Emerald */
   --accent-warning: #f59e0b; /* Amber */
-  --accent-error: #ef4444;   /* Crimson */
-  --accent-drill: #0ea5e9;   /* Sky Blue */
+  --accent-error: #ef4444; /* Crimson */
+  --accent-drill: #0ea5e9; /* Sky Blue */
 
   --text-bright: #ffffff;
   --text-main: #d1d1d6;
@@ -50,11 +50,18 @@ body {
   margin: 0;
   min-height: 100vh;
   background-color: var(--bg-deep);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+  background-image:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(99, 102, 241, 0.05) 0%,
+      transparent 50%
+    ),
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-size:
+    100% 100%,
+    40px 40px,
+    40px 40px;
   background-attachment: fixed;
 }
 
@@ -83,20 +90,39 @@ body {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes glowPulse {
-  0% { box-shadow: 0 0 5px rgba(204, 255, 0, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(204, 255, 0, 0.4); }
-  100% { box-shadow: 0 0 5px rgba(204, 255, 0, 0.2); }
+  0% {
+    box-shadow: 0 0 5px rgba(204, 255, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(204, 255, 0, 0.2);
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 /* Chessground Customization */
@@ -133,11 +159,17 @@ body {
 }
 
 .cg-wrap .square.move-dest {
-  background: radial-gradient(rgba(99, 102, 241, 0.4) 15%, transparent 16%) !important;
+  background: radial-gradient(
+    rgba(99, 102, 241, 0.4) 15%,
+    transparent 16%
+  ) !important;
 }
 
 .cg-wrap .square.premove-dest {
-  background: radial-gradient(rgba(245, 158, 11, 0.4) 15%, transparent 16%) !important;
+  background: radial-gradient(
+    rgba(245, 158, 11, 0.4) 15%,
+    transparent 16%
+  ) !important;
 }
 
 .feedback-correct {
@@ -157,7 +189,8 @@ body {
 }
 
 /* Global Button & Input Styles */
-input, textarea {
+input,
+textarea {
   font-family: var(--font-main);
 }
 

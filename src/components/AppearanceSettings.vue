@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps<{
   pieceSet: string;
@@ -7,60 +7,103 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:pieceSet', value: string): void;
-  (e: 'update:boardTheme', value: string): void;
+  (e: "update:pieceSet", value: string): void;
+  (e: "update:boardTheme", value: string): void;
 }>();
 
 const pieceSets = [
-  'alpha', 'anarcandy', 'caliente', 'california', 'cardinal', 'cburnett', 
-  'celtic', 'chess7', 'chessnut', 'companion', 'cooke', 
-  'dubrovny', 'fantasy', 'firi', 'fresca', 'gioco', 'governor', 'horsey', 
-  'icpieces', 'kiwen-suwi', 'kosal', 'leipzig', 'letter', 'maestro', 
-  'merida', 'monarchy', 'mpchess', 'pirouetti', 'pixel', 'reillycraig', 
-  'rhosgfx', 'riohacha', 'shahi-ivory-brown', 'shapes', 'spatial', 
-  'staunty', 'tatiana'
+  "alpha",
+  "anarcandy",
+  "caliente",
+  "california",
+  "cardinal",
+  "cburnett",
+  "celtic",
+  "chess7",
+  "chessnut",
+  "companion",
+  "cooke",
+  "dubrovny",
+  "fantasy",
+  "firi",
+  "fresca",
+  "gioco",
+  "governor",
+  "horsey",
+  "icpieces",
+  "kiwen-suwi",
+  "kosal",
+  "leipzig",
+  "letter",
+  "maestro",
+  "merida",
+  "monarchy",
+  "mpchess",
+  "pirouetti",
+  "pixel",
+  "reillycraig",
+  "rhosgfx",
+  "riohacha",
+  "shahi-ivory-brown",
+  "shapes",
+  "spatial",
+  "staunty",
+  "tatiana",
 ];
 
 const boardThemes = [
-  { id: 'blue', name: 'Blue', ext: 'png' },
-  { id: 'blue2', name: 'Blue 2', ext: 'jpg' },
-  { id: 'blue3', name: 'Blue 3', ext: 'jpg' },
-  { id: 'blue-marble', name: 'Blue Marble', ext: 'jpg' },
-  { id: 'brown', name: 'Brown', ext: 'png' },
-  { id: 'canvas2', name: 'Canvas', ext: 'jpg' },
-  { id: 'green', name: 'Green', ext: 'png' },
-  { id: 'green-plastic', name: 'Green Plastic', ext: 'png' },
-  { id: 'grey', name: 'Grey', ext: 'jpg' },
-  { id: 'leather', name: 'Leather', ext: 'jpg' },
-  { id: 'maple', name: 'Maple', ext: 'jpg' },
-  { id: 'maple2', name: 'Maple 2', ext: 'jpg' },
-  { id: 'marble', name: 'Marble', ext: 'jpg' },
-  { id: 'metal', name: 'Metal', ext: 'jpg' },
-  { id: 'olive', name: 'Olive', ext: 'jpg' },
-  { id: 'purple', name: 'Purple', ext: 'png' },
-  { id: 'wood', name: 'Wood', ext: 'jpg' },
-  { id: 'wood2', name: 'Wood 2', ext: 'jpg' },
-  { id: 'wood3', name: 'Wood 3', ext: 'jpg' },
-  { id: 'wood4', name: 'Wood 4', ext: 'jpg' },
+  { id: "blue", name: "Blue", ext: "png" },
+  { id: "blue2", name: "Blue 2", ext: "jpg" },
+  { id: "blue3", name: "Blue 3", ext: "jpg" },
+  { id: "blue-marble", name: "Blue Marble", ext: "jpg" },
+  { id: "brown", name: "Brown", ext: "png" },
+  { id: "canvas2", name: "Canvas", ext: "jpg" },
+  { id: "green", name: "Green", ext: "png" },
+  { id: "green-plastic", name: "Green Plastic", ext: "png" },
+  { id: "grey", name: "Grey", ext: "jpg" },
+  { id: "leather", name: "Leather", ext: "jpg" },
+  { id: "maple", name: "Maple", ext: "jpg" },
+  { id: "maple2", name: "Maple 2", ext: "jpg" },
+  { id: "marble", name: "Marble", ext: "jpg" },
+  { id: "metal", name: "Metal", ext: "jpg" },
+  { id: "olive", name: "Olive", ext: "jpg" },
+  { id: "purple", name: "Purple", ext: "png" },
+  { id: "wood", name: "Wood", ext: "jpg" },
+  { id: "wood2", name: "Wood 2", ext: "jpg" },
+  { id: "wood3", name: "Wood 3", ext: "jpg" },
+  { id: "wood4", name: "Wood 4", ext: "jpg" },
 ];
 
 const isOpen = ref(false);
 
 const selectPieceSet = (set: string) => {
-  emit('update:pieceSet', set);
+  emit("update:pieceSet", set);
 };
 
 const selectBoardTheme = (themeId: string) => {
-  emit('update:boardTheme', themeId);
+  emit("update:boardTheme", themeId);
 };
 </script>
 
 <template>
   <div class="appearance-settings">
-    <button @click="isOpen = !isOpen" class="settings-trigger" :class="{ active: isOpen }">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button
+      @click="isOpen = !isOpen"
+      class="settings-trigger"
+      :class="{ active: isOpen }"
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
         <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+        ></path>
       </svg>
       <span>Appearance</span>
     </button>
@@ -70,15 +113,18 @@ const selectBoardTheme = (themeId: string) => {
         <div class="settings-section">
           <label>Board Theme</label>
           <div class="themes-grid">
-            <button 
-              v-for="theme in boardThemes" 
+            <button
+              v-for="theme in boardThemes"
               :key="theme.id"
               class="theme-thumb"
               :class="{ active: boardTheme === theme.id }"
               @click="selectBoardTheme(theme.id)"
               :title="theme.name"
             >
-              <img :src="`/board/${theme.id}.thumbnail.${theme.ext}`" :alt="theme.name" />
+              <img
+                :src="`/board/${theme.id}.thumbnail.${theme.ext}`"
+                :alt="theme.name"
+              />
             </button>
           </div>
         </div>
@@ -86,15 +132,23 @@ const selectBoardTheme = (themeId: string) => {
         <div class="settings-section">
           <label>Piece Set</label>
           <div class="pieces-list">
-            <button 
-              v-for="set in pieceSets" 
+            <button
+              v-for="set in pieceSets"
               :key="set"
               class="piece-item"
               :class="{ active: pieceSet === set }"
               @click="selectPieceSet(set)"
             >
-              <img :src="`/pieces/${set}/wN.svg`" class="piece-preview" v-if="set !== 'monarchy' && set !== 'mono'" />
-              <img :src="`/pieces/${set}/wN.webp`" class="piece-preview" v-else-if="set === 'monarchy'" />
+              <img
+                :src="`/pieces/${set}/wN.svg`"
+                class="piece-preview"
+                v-if="set !== 'monarchy' && set !== 'mono'"
+              />
+              <img
+                :src="`/pieces/${set}/wN.webp`"
+                class="piece-preview"
+                v-else-if="set === 'monarchy'"
+              />
               <img :src="`/pieces/${set}/N.svg`" class="piece-preview" v-else />
               <span>{{ set }}</span>
             </button>
@@ -312,10 +366,12 @@ const selectBoardTheme = (themeId: string) => {
   height: 24px;
 }
 
-.slide-fade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.slide-fade-enter-from, .slide-fade-leave-to {
+.slide-fade-enter-from,
+.slide-fade-leave-to {
   transform: translateY(10px);
   opacity: 0;
 }
